@@ -1,0 +1,12 @@
+<footer class="footer">
+  <span class="todo-count"><strong>{{earring}}</strong> Tareas pendientes</span>
+  <ul class="filters">
+    <li *ngFor="let filter of filters" (click)="changeFilter(filter)">
+      <a href="#/"
+        [class.selected]="filter === actualFilter">
+        {{filter | titlecase}}
+      </a>
+    </li>
+  </ul>
+  <button class="clear-completed" (click)="clearComplete()">Limpiar completados</button>
+</footer>
