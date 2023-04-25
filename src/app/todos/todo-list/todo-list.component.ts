@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoListComponent implements OnInit {
+
   public actualFilter$?: Observable<validsFilters>;
   public todos$?: Observable<Todo[]>;
 
@@ -34,4 +35,5 @@ export class TodoListComponent implements OnInit {
     this.actualFilter$ = this._store.select('filter');
     this._cdr.markForCheck();
   }
+
 }

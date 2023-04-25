@@ -19,9 +19,7 @@ export class TodoAddComponent {
   }
 
   public add(): void {
-    if (this.descriptionFormControl.invalid) {
-      return;
-    }
+    if (this.descriptionFormControl.invalid) { return; }
     this._store.dispatch(
       actions.create({ texto: this.descriptionFormControl.value })
     );

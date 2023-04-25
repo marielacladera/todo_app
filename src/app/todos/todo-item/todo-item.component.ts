@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -12,6 +11,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as actions from '../todo.actions';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todo-item',
@@ -20,6 +20,7 @@ import * as actions from '../todo.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoItemComponent implements OnInit {
+
   @Input() todo!: Todo;
   @ViewChild('inputFisico') txtInputFisico?: ElementRef;
 
@@ -27,35 +28,16 @@ export class TodoItemComponent implements OnInit {
   public descriptionFormControl: FormControl;
   public editing: boolean;
 
-  constructor(private _store: Store<AppState>) {
-    this.checkFormControl = new FormControl(false);
+  constructor(
+    private _store: Store<AppState>
+  ) {
     this.descriptionFormControl = new FormControl('');
+    this.checkFormControl = new FormControl(false);
     this.editing = false;
   }
 
   public ngOnInit(): void {
     this._initialize();
-  }
-
-  private _initialize(): void {
-    this._startForm();
-    this._changeState();
-  }
-
-  private _startForm(): void {
-    if (this.todo) {
-      this.checkFormControl = new FormControl(this.todo.completed);
-      this.descriptionFormControl = new FormControl(
-        this.todo.text,
-        Validators.required
-      );
-    }
-  }
-
-  private _changeState(): void {
-    this.checkFormControl.valueChanges.subscribe(() => {
-      this._store.dispatch(actions.toggle({ id: this.todo.id }));
-    });
   }
 
   public editTodo(): void {
@@ -77,6 +59,35 @@ export class TodoItemComponent implements OnInit {
     this._editTextTodo();
   }
 
+  public removeTodo(): void {
+    this._store.dispatch(
+      actions.remove({
+        id: this.todo.id,
+      })
+    );
+  }
+
+  private _initialize(): void {
+    this._startForm();
+    this._changeState();
+  }
+
+  private _startForm(): void {
+    if (this.todo) {
+      this.checkFormControl = new FormControl(this.todo.completed);
+      this.descriptionFormControl = new FormControl(
+        this.todo.text,
+        Validators.required
+      );
+    }
+  }
+
+  private _changeState(): void {
+    this.checkFormControl.valueChanges.pipe(take(1)).subscribe(() => {
+      this._store.dispatch(actions.toggle({ id: this.todo.id }));
+    });
+  }
+
   private _editTextTodo(): void {
     this._store.dispatch(
       actions.edit({
@@ -86,11 +97,4 @@ export class TodoItemComponent implements OnInit {
     );
   }
 
-  public removeTodo(): void {
-    this._store.dispatch(
-      actions.remove({
-        id: this.todo.id,
-      })
-    );
-  }
 }
