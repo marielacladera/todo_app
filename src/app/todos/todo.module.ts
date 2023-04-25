@@ -10,7 +10,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoPageComponent } from './todo-page/todo-page.component';
 import { FilterPipe } from './filter.pipe';
 
-
+import { ReactiveComponentModule } from '@ngrx/component';
 
 @NgModule({
   declarations: [
@@ -23,6 +23,7 @@ import { FilterPipe } from './filter.pipe';
   ],
   imports: [
     CommonModule,
+    ReactiveComponentModule,
     ReactiveFormsModule,
   ],
   exports: [

@@ -1,9 +1,9 @@
 <footer class="footer">
-  <span class="todo-count"><strong>{{earring}}</strong> Tareas pendientes</span>
+  <span class="todo-count"><strong>{{pending}}</strong> Tareas pendientes</span>
   <ul class="filters">
     <li *ngFor="let filter of filters" (click)="changeFilter(filter)">
       <a href="#/"
-        [class.selected]="filter === actualFilter">
+        [class.selected]="filter === (actualFilter$ | ngrxPush)">
         {{filter | titlecase}}
       </a>
     </li>

@@ -11,7 +11,7 @@ export class FilterPipe implements PipeTransform {
     switch(filter){
       case 'complete':
         return todos.filter(todo => todo.completed);
-      case 'earring':
+      case 'pending':
         return todos.filter(todo => !todo.completed);
       default:
         return todos;

@@ -8,22 +8,24 @@ import * as actions from '../todo.actions';
   selector: 'app-todo-add',
   templateUrl: './todo-add.component.html',
   styleUrls: ['./todo-add.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoAddComponent {
 
-  public txtInput: FormControl;
+  public descriptionFormControl: FormControl;
 
-  constructor(
-    private _store: Store<AppState>
-  ) {
-    this.txtInput = new FormControl('', Validators.required);
+  constructor(private _store: Store<AppState>) {
+    this.descriptionFormControl = new FormControl('', Validators.required);
   }
 
   public add(): void {
-    if(this.txtInput.invalid){return}
-    this._store.dispatch(actions.create({texto: this.txtInput.value}));
-    this.txtInput.reset();
+    if (this.descriptionFormControl.invalid) {
+      return;
+    }
+    this._store.dispatch(
+      actions.create({ texto: this.descriptionFormControl.value })
+    );
+    this.descriptionFormControl.reset();
   }
 
 }

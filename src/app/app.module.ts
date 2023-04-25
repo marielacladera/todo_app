@@ -8,6 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 
+import { ReactiveComponentModule } from '@ngrx/component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducer } from './app.reducer';
@@ -23,6 +24,7 @@ import { appReducer } from './app.reducer';
     BrowserAnimationsModule,
     TodoModule,
     ReactiveFormsModule,
+    ReactiveComponentModule,
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
